@@ -196,7 +196,7 @@ Get Broker Property By Username
   log_object_data  ${ARTIFACT}  file_name=artifact  update=${True}  artifact=${True}
 
 
-Підготувати дані для створення тендера
+Prepare data for tender creation
   [Arguments]  ${tender_parameters}
   ${period_intervals}=  compute_intrs  ${BROKERS}  ${used_brokers}
   ${tender_data}=  prepare_test_tender_data  ${period_intervals}  ${tender_parameters}
@@ -254,14 +254,14 @@ Get Broker Property By Username
   [Return]  ${cancellation_data}
 
 
-Адаптувати дані для оголошення тендера
+Adapt data for tender announcement
   [Arguments]  ${tender_data}
   # munchify is used to make deep copy of ${tender_data}
   ${adapted_data}=  munchify  ${tender_data}
   :FOR  ${username}  IN  @{USED_ROLES}
   # munchify is used to make deep copy of ${adapted_data}
   \  ${adapted_data_copy}=  munchify  ${adapted_data}
-  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Підготувати дані для оголошення тендера  ${adapted_data_copy}  ${username}
+  \  ${status}  ${adapted_data_from_broker}=  Run keyword and ignore error  Run As  ${${username}}  Prepare data for tender announcement  ${adapted_data_copy}  ${username}
   \  Log  ${adapted_data_from_broker}
   # Need this in case ``${${username}}`` doesn't have `Підготувати дані для оголошення
   # тендера користувачем` keyword, so after `Run keyword and ignore error` call
@@ -304,7 +304,7 @@ Log differences between dicts
   Run Keyword If  ${bundled_st} == ${external_st} == ${True}  Fail  Resource file ${keywords_file}.robot found in both brokers${/} and src${/}
 
 
-Дочекатись синхронізації з майданчиком
+Wait for platform synchronization
   [Arguments]  ${username}
   [Documentation]
   ...      Synchronise with ``username`` and update cache
@@ -362,7 +362,7 @@ Log differences between dicts
   ...      ${USERS.users['${username}']['LAST_REFRESH_DATE']}
   ${LAST_REFRESH_DATE}=  Get Current TZdate
   Run Keyword If  ${time_diff} > 0  Run keywords
-  ...      Run As  ${username}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
+  ...      Run As  ${username}  Update tender page  ${TENDER['TENDER_UAID']}
   ...      AND
   ...      Set To Dictionary  ${USERS.users['${username}']}  LAST_REFRESH_DATE=${LAST_REFRESH_DATE}
 
@@ -373,16 +373,16 @@ Log differences between dicts
   Дочекатись синхронізації з майданчиком  ${username}
 
 
-Звірити поле тендера
+Verify tender field
   [Arguments]  ${username}  ${tender_uaid}  ${tender_data}  ${field}
   ${left}=  get_from_object  ${tender_data.data}  ${field}
-  Звірити поле тендера із значенням  ${username}  ${tender_uaid}  ${left}  ${field}
+  Verify tender field with values  ${username}  ${tender_uaid}  ${left}  ${field}
 
 
-Звірити поле тендера із значенням
+Verify tender field with values
   [Arguments]  ${username}  ${tender_uaid}  ${left}  ${field}  ${object_id}=${Empty}
-  ${right}=  Отримати дані із тендера  ${username}  ${tender_uaid}  ${field}  ${object_id}
-  Порівняти об'єкти  ${left}  ${right}
+  ${right}=  Retrieve tender data  ${username}  ${tender_uaid}  ${field}  ${object_id}
+  Compare objects  ${left}  ${right}
 
 
 Звірити значення поля серед усіх документів тендера
@@ -413,7 +413,7 @@ Log differences between dicts
   compare_tender_attempts  ${left}  ${right}
 
 
-Порівняти об'єкти
+Compare objects
   [Arguments]  ${left}  ${right}
   Log  ${left}
   Log  ${right}
@@ -504,9 +504,9 @@ Log differences between dicts
   \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
 
 
-Отримати дані із тендера
+Retrieve tender data
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${object_id}=${Empty}
-  ${field}=  Run Keyword If  '${object_id}'  Отримати шлях до поля об’єкта  ${username}  ${field_name}  ${object_id}
+  ${field}=  Run Keyword If  '${object_id}'  Retrieve path to the object field  ${username}  ${field_name}  ${object_id}
   ...             ELSE  Set Variable  ${field_name}
   ${status}  ${field_value}=  Run keyword and ignore error
   ...      get_from_object
@@ -515,8 +515,8 @@ Log differences between dicts
   # If field in cache, return its value
   Run Keyword if  '${status}' == 'PASS'  Return from keyword   ${field_value}
   # Else call broker to find field
-  ${field_value}=  Run Keyword IF  '${object_id}'  Отримати дані із об’єкта тендера  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
-  ...                          ELSE  Run As  ${username}  Отримати інформацію із тендера  ${tender_uaid}  ${field}
+  ${field_value}=  Run Keyword IF  '${object_id}'  Retrieve data from the tender object  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
+  ...                          ELSE  Run As  ${username}  Retrieve tender information  ${tender_uaid}  ${field}
   # And caching its value before return
   Set_To_Object  ${USERS.users['${username}'].tender_data.data}  ${field}  ${field_value}
   ${data}=  munch_dict  arg=${USERS.users['${username}'].tender_data.data}
@@ -525,7 +525,7 @@ Log differences between dicts
   [return]  ${field_value}
 
 
-Отримати шлях до поля об’єкта
+Retrieve path to the object field
   [Arguments]  ${username}  ${field_name}  ${object_id}
   ${object_type}=  get_object_type_by_id  ${object_id}
   ${objects}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data['${object_type}']}  ${None}
@@ -533,7 +533,7 @@ Log differences between dicts
   [return]  ${object_type}[${object_index}].${field_name}
 
 
-Отримати дані із об’єкта тендера
+Retrieve data from the tender object
   [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field_name}
   ${object_type}=  get_object_type_by_id  ${object_id}
   ${status}  ${value}=  Run Keyword If  '${object_type}'=='questions'
@@ -568,7 +568,7 @@ Log differences between dicts
   ...      ${cancellation_data['description']}
 
 
-Можливість вичитати посилання на аукціон для глядача
+Possibility to retrieve auction link for viewer
   ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
   ...                  ${timeout_on_wait} < ${3000}
@@ -577,16 +577,13 @@ Log differences between dicts
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
   ...      15 s
-  ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
+  ...      Run As  ${viewer}  Retrieve auction link for viewer  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Run Keyword If  '${MODE}'=='dgfInsider'
-  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
-  ...     ELSE
-  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
-  Log  URL аукціону для глядача: ${url}
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
+  Log  Auction URL for viewer: ${url}
 
 
-Можливість вичитати посилання на аукціон для учасника ${username}
+Possibility to retrieve auction link for ${username}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
   ...                  ${timeout_on_wait} < ${1000}
@@ -595,13 +592,17 @@ Log differences between dicts
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
   ...      15 s
-  ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
+  ...      Run As  ${username}  Retrieve auction link for viewer  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
-  Run Keyword If  '${MODE}'=='dgfInsider'
-  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
-  ...     ELSE
-  ...     Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/auctions\/([0-9A-Fa-f]{32})
+  Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
+
+
+Possibility to retrieve auction period start date for user ${username}
+  Wait until keyword succeeds
+  ...      15 min
+  ...      15 sec
+  ...      Retrieve data from tender field auctionPeriod.startDate for user ${username}
 
 
 Run As
@@ -655,10 +656,10 @@ Require Failure
   ...      ${next_status}
 
 
-Звірити статус тендера
+Verify tender status
   [Arguments]  ${username}  ${tender_uaid}  ${left}
-  ${right}=  Run as  ${username}  Отримати інформацію із тендера  ${tender_uaid}  status
-  Порівняти об'єкти  ${left}  ${right}
+  ${right}=  Run as  ${username}  Retrieve tender information  ${tender_uaid}  status
+  Compare objects  ${left}  ${right}
 
 
 Звірити статус скасування тендера
@@ -838,13 +839,14 @@ Require Failure
   ...      complete
 
 
-Дочекатись дати початку періоду аукціону
+Wait auction period start date
   [Arguments]  ${username}  ${tender_uaid}
-  Дочекатись синхронізації з майданчиком  ${username}
+  Update LAST_MODIFICATION_DATE
+  Wait for platform synchronization  ${username}
   Wait until keyword succeeds
   ...      30 min 15 sec
   ...      15 sec
-  ...      Звірити статус тендера
+  ...      Verify tender status
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.auction
@@ -873,7 +875,7 @@ Require Failure
   ...      active.qualification
 
 
-Оновити LAST_MODIFICATION_DATE
+Update LAST_MODIFICATION_DATE
   [Documentation]
   ...      Variable ``${TEST_STATUS}`` is only available in test case teardown.
   ...      When we call this keyword from elswere, we need to presume that

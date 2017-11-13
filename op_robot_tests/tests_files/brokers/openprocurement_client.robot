@@ -4,7 +4,7 @@ Library  openprocurement_client.utils
 
 
 *** Keywords ***
-Отримати internal id по UAid
+Retrieve internal id by UAid
   [Arguments]  ${username}  ${tender_uaid}
   Log  ${username}
   Log  ${tender_uaid}
@@ -181,9 +181,9 @@ Library  openprocurement_client.utils
   [return]  ${filename}
 
 
-Отримати посилання на аукціон для глядача
+Retrieve auction link for viewer
   [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
-  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Tender search by identificator  ${username}  ${tender_uaid}
   ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
@@ -192,13 +192,13 @@ Library  openprocurement_client.utils
 #             Tender operations
 ##############################################################################
 
-Підготувати дані для оголошення тендера
+Prepare data for tender announcement
   [Documentation]  Це слово використовується в майданчиків, тому потрібно, щоб воно було і тут
   [Arguments]  ${username}  ${tender_data}  ${role_name}
   [return]  ${tender_data}
 
 
-Створити тендер
+Create tender
   [Arguments]  ${username}  ${tender_data}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  create_tender  ${tender_data}
   Log object data  ${tender}  created_tender
@@ -210,9 +210,9 @@ Library  openprocurement_client.utils
   [return]  ${tender.data.auctionID}
 
 
-Пошук тендера по ідентифікатору
+Tender search by identificator
   [Arguments]  ${username}  ${tender_uaid}
-  ${internalid}=  openprocurement_client.Отримати internal id по UAid  ${username}  ${tender_uaid}
+  ${internalid}=  openprocurement_client.Retrieve internal id by UAid  ${username}  ${tender_uaid}
   ${tender}=  Call Method  ${USERS.users['${username}'].client}  get_tender  ${internalid}
   ${tender}=  set_access_key  ${tender}  ${USERS.users['${username}'].access_token}
   Set To Dictionary  ${USERS.users['${username}']}  tender_data=${tender}
@@ -221,14 +221,14 @@ Library  openprocurement_client.utils
   [return]   ${tender}
 
 
-Оновити сторінку з тендером
+Update tender page
   [Arguments]  ${username}  ${tender_uaid}
-  openprocurement_client.Пошук тендера по ідентифікатору    ${username}  ${tender_uaid}
+  openprocurement_client.Tender search by identificator  ${username}  ${tender_uaid}
 
 
-Отримати інформацію із тендера
+Retrieve tender information
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}
-  openprocurement_client.Пошук тендера по ідентифікатору
+  openprocurement_client.Tender search by identificator
   ...      ${username}
   ...      ${tender_uaid}
 

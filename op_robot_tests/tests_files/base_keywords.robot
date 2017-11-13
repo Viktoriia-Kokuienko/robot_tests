@@ -6,7 +6,7 @@ Resource           resource.robot
 
 
 *** Keywords ***
-Можливість оголосити тендер
+Possibility to announce a tender
   ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
   ${tender_parameters}=  Create Dictionary
   ...      mode=${MODE}
@@ -16,21 +16,21 @@ Resource           resource.robot
   ...      api_host_url=${API_HOST_URL}
   ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
   Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
-  ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
-  ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
-  ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}
+  ${tender_data}=  Prepare data for tender creation  ${tender_parameters}
+  ${adapted_data}=  Adapt data for tender announcement  ${tender_data}
+  ${TENDER_UAID}=  Run As  ${tender_owner}  Create tender  ${adapted_data}
   Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
   Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
 
 
-Можливість знайти тендер по ідентифікатору для усіх користувачів
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${provider2}  ${viewer}
-  \  Можливість знайти тендер по ідентифікатору для користувача ${username}
+Possibility to find a tender by identificator for all users
+  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
+  \  Possibility to find a tender by identificator for user ${username}
 
 
-Можливість знайти тендер по ідентифікатору для користувача ${username}
-  Дочекатись синхронізації з майданчиком  ${username}
-  Run as  ${username}  Пошук тендера по ідентифікатору  ${TENDER['TENDER_UAID']}
+Possibility to find a tender by identificator for user ${username}
+  Wait for platform synchronization  ${username}
+  Run as  ${username}  Tender search by identificator  ${TENDER['TENDER_UAID']}
 
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
@@ -105,17 +105,17 @@ Resource           resource.robot
   Порівняти об'єкти  ${left}  ${right}
 
 
-Звірити відображення поля ${field} тендера для усіх користувачів
+Verify viewing of tender field ${field} for all users
   :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
-  \  Звірити відображення поля ${field} тендера для користувача ${username}
+  \  Verify viewing of tender field ${field} for user ${username}
 
 
 Звірити відображення поля ${field} тендера із ${data} для користувача ${username}
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}
 
 
-Звірити відображення поля ${field} тендера для користувача ${username}
-  Звірити поле тендера  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
+Verify viewing of tender field ${field} for user ${username}
+  Verify tender field  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data}  ${field}
 
 
 Звірити відображення вмісту документа ${doc_id} із ${left} для користувача ${username}
@@ -188,13 +188,13 @@ Resource           resource.robot
   Should Be True  ${comparision}
 
 
-Отримати дані із поля ${field} тендера для усіх користувачів
+Retrieve data from tender field ${field} for all users
   :FOR  ${username}  IN  ${viewer}  ${provider}  ${provider1}  ${tender_owner}
-  \  Отримати дані із поля ${field} тендера для користувача ${username}
+  \  Retrieve data from tender field ${field} for user ${username}
 
 
-Отримати дані із поля ${field} тендера для користувача ${username}
-  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  ${field}
+Retrieve data from tender field ${field} for user ${username}
+  Retrieve tender data  ${username}  ${TENDER['TENDER_UAID']}  ${field}
 
 ##############################################################################################
 #             QUESTIONS
