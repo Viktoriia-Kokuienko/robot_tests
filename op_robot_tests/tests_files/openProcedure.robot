@@ -986,7 +986,7 @@ Possibility to retrieve auction link for viewer
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction_url_1
-  [Setup]  Wait auction period start date  ${viewer}  ${TENDER['TENDER_UAID']}
+  [Setup]  Wait until auction period start date  ${viewer}  ${TENDER['TENDER_UAID']}
   Possibility to retrieve auction link for viewer
 
 

@@ -755,13 +755,13 @@ Verify tender status
   ...      ${USERS.users['${tender_owner}'].initial_data.data.tenderPeriod.endDate}
   ...      ${date}
   wait_and_write_to_console  ${date}
-  Оновити LAST_MODIFICATION_DATE
-  Дочекатись синхронізації з майданчиком  ${username}
+  Update LAST_MODIFICATION_DATE
+  Wait for platform synchronization  ${username}
   Wait until keyword succeeds
   ...      5 min 15 sec
   ...      15 sec
   ...      Run Keyword And Expect Error  *
-  ...      Звірити статус тендера
+  ...      Verify tender status
   ...      ${username}
   ...      ${tender_uaid}
   ...      active.tendering
@@ -839,7 +839,7 @@ Verify tender status
   ...      complete
 
 
-Wait auction period start date
+Wait until auction period start date
   [Arguments]  ${username}  ${tender_uaid}
   Update LAST_MODIFICATION_DATE
   Wait for platform synchronization  ${username}
