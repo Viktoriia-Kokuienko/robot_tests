@@ -173,6 +173,20 @@ Resource           resource.robot
   \  Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
 
 
+Звірити відображення поля ${field} усіх предметів із ${data} для усіх користувачів
+  :FOR  ${username}  IN  ${viewer}  ${tender_owner}  ${provider}  ${provider1}
+  \  Звірити відображення поля ${field} усіх предметів із ${data} для користувача ${username}
+
+
+Звірити відображення поля ${field} усіх предметів із ${data} для користувача ${username}
+  :FOR  ${item_index}  IN RANGE  ${NUMBER_OF_ITEMS}
+  \  Звірити відображення поля ${field} ${item_index} предмету із ${data} для користувача ${username}
+
+Звірити відображення поля ${field} ${item_index} предмету із ${data} для користувача ${username}
+  ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
+  Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${data}  ${field}  ${item_id}
+
+
 Звірити відображення поля ${field} ${item_index} предмету для користувача ${username}
   ${item_id}=  get_id_from_object  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}]}
   Звірити поле тендера із значенням  ${username}  ${TENDER['TENDER_UAID']}  ${USERS.users['${tender_owner}'].initial_data.data['items'][${item_index}].${field}}  ${field}  ${item_id}

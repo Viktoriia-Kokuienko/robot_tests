@@ -209,6 +209,7 @@ Get Broker Property By Username
 Підготувати дані для створення предмету закупівлі
   [Arguments]  ${scheme}
   ${item} =  Run Keyword If  '${MODE}'=='dgfFinancialAssets'  test_item_data_financial  ${scheme[0:4]}
+  ${item} =  Run Keyword If  '${MODE}'=='propertyLease'  test_item_data_lease  ${scheme[0:4]}
   ...        ELSE  test_item_data  ${scheme[0:4]}
   [Return]  ${item}
 

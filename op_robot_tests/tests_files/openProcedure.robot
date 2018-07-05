@@ -57,9 +57,18 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_dgfID
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Звірити відображення поля dgfID тендера для користувача ${viewer}
+
+
+Відображення номера аукціону ФГВ lotIdentifier
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_lotIdentifier
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Звірити відображення поля lotIdentifier тендера для користувача ${viewer}
 
 
 Відображення поля "Лоти виставляються"
@@ -270,8 +279,32 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_additionalClassifications_lot
   Звірити поле additionalClassifications[0].description тендера усіх предметів для користувача ${viewer}
+
+
+Відображення схеми додаткової класифікації активів лоту оренди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_additionalClassifications_lease
+  Звірити відображення поля additionalClassifications[0].scheme усіх предметів із CPVS для усіх користувачів
+
+
+Відображення ідентифікатора додаткової класифікації активів лоту оренди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_additionalClassifications_lease
+  Звірити відображення поля additionalClassifications[0].id усіх предметів із PA01-7 для усіх користувачів
+
+
+Відображення опису додаткової класифікації активів лоту оренди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення активів лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_additionalClassifications_lease
+  Звірити відображення поля additionalClassifications[0].description усіх предметів із Оренда для усіх користувачів
 
 
 Відображення назви одиниці активів лоту
@@ -329,8 +362,16 @@ ${ITEM_MEAT}        ${True}
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
+  ...      tender_view_rectification_end
   Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
+
+
+Відображення отриманої дати завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view_rectification_lease
+  Отримати дані із поля rectificationPeriod.endDate тендера для усіх користувачів
 
 
 Можливість перевірити тривалість періоду редагування лоту
@@ -491,6 +532,27 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  dgfID
   Звірити відображення поля dgfID тендера із ${USERS.users['${tender_owner}'].new_dgfID} для користувача ${viewer}
+
+
+Можливість змінити номер аукціону ФГВ lotIdentifier
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_lotIdentifier
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_lotIdentifier}=  create_fake_dgfID
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_lotIdentifier=${new_lotIdentifier}
+  Можливість змінити поле lotIdentifier тендера на ${new_lotIdentifier}
+
+
+Відображення зміненого номер аукціону ФГВ lotIdentifier
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      modify_lotIdentifier
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  lotIdentifier
+  Звірити відображення поля lotIdentifier тендера із ${USERS.users['${tender_owner}'].new_lotIdentifier} для користувача ${viewer}
 
 
 Можливість змінити ПДВ в бюджеті лоту
@@ -895,6 +957,15 @@ ${ITEM_MEAT}        ${True}
   Можливість подати цінову пропозицію користувачем ${provider1}
 
 
+Можливість збільшити пропозицію на 7% другим учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      increase_bid_by_provider1
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість збільшити пропозицію до 107 відсотків користувачем ${provider1}
+
+
 Можливість зменшити пропозицію до невалідної для кваліфікації другим учасником
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
@@ -1116,6 +1187,16 @@ ${ITEM_MEAT}        ${True}
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   ${new_dgfID}=  create_fake_dgfID
   Перевірити неможливість зміни поля dgfID тендера на значення ${new_dgfID} для користувача ${tender_owner}
+
+
+Неможливість змінити номер аукціону ФГВ lotIdentifier після завершення періоду редагування лоту
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відображення основних даних лоту
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      modify_lotIdentifier
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  ${new_lotIdentifier}=  create_fake_dgfID
+  Перевірити неможливість зміни поля lotIdentifier тендера на значення ${new_lotIdentifier} для користувача ${tender_owner}
 
 
 Неможливість змінити початкову вартість лоту

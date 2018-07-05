@@ -26,6 +26,9 @@ class OP_Provider(BaseProvider):
     schemes_other = __fake_data.schemes_other
     items_base_data_other = __fake_data.items_base_data_other
     additionalIdentifiers = __fake_data.additionalIdentifiers
+    classifications_lease = __fake_data.classifications_lease
+    schemes_lease = __fake_data.schemes_lease
+    items_base_data_lease = __fake_data.items_base_data_lease
 
     @classmethod
     def randomize_nb_elements(self, number=10, le=60, ge=140):
@@ -106,6 +109,10 @@ class OP_Provider(BaseProvider):
         return self.random_element(self.schemes_other)
 
     @classmethod
+    def scheme_lease(self):
+        return self.random_element(self.schemes_lease)
+
+    @classmethod
     def additionalIdentifier(self):
         return self.random_element(self.additionalIdentifiers)
 
@@ -142,6 +149,46 @@ class OP_Provider(BaseProvider):
             "description_en": item_base_data["description_en"],
             "classification": classification["classification"],
             "additionalClassifications": classification["additionalClassifications"],
+            "address": address["deliveryAddress"],
+            "deliveryLocation": address["deliveryLocation"],
+            "unit": item_base_data["unit"],
+            "quantity": self.randomize_nb_elements(number=item_base_data["quantity"], le=80, ge=120)
+        }
+        return deepcopy(item)
+
+    @classmethod
+    def fake_item_lease(self, scheme_group):
+        # """
+        # Generate a random item for openprocurement tenders
+
+        # :param scheme_group: gives possibility to generate items
+        #     from a specific scheme group. scheme group is three digits
+        #     in the beginning of each scheme id.
+        # """
+        # for dgf other mode, and all other modes besides dgf financial
+        # generates items from dgf_other scheme group
+        scheme_group = str(scheme_group)
+        similar_scheme = []
+        for scheme_element in self.classifications_lease:
+            if scheme_element["classification"]["id"].startswith(scheme_group):
+                similar_scheme.append(scheme_element)
+        scheme = self.random_element(similar_scheme)["classification"]["id"]
+        for entity in self.items_base_data_lease:
+            if entity["scheme_id"] == scheme:
+                item_base_data = entity
+                break
+        for entity in self.classifications_lease:
+            if entity["classification"]["id"] == item_base_data["scheme_id"]:
+                classification = entity
+                break
+
+        address = self.random_element(self.addresses)
+        item = {
+            "description": item_base_data["description"],
+            "description_ru": item_base_data["description_ru"],
+            "description_en": item_base_data["description_en"],
+            "classification": classification["classification"],
+            # "additionalClassifications": classification["additionalClassifications"],
             "address": address["deliveryAddress"],
             "deliveryLocation": address["deliveryLocation"],
             "unit": item_base_data["unit"],

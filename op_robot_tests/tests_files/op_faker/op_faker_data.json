@@ -3064,6 +3064,127 @@
             }
         }
     ],
+    "classifications_lease": [
+        {
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "04121000-2",
+                "description": "Квартира"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "04224000-4",
+                "description": "Об’єкт готельного призначення (готель, кемпінг тощо)"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "05110000-9",
+                "description": "Молокозаводи"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "05110700-6",
+                "description": "Овочесховища"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06122000-3",
+                "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CAV-PS",
+                "id": "06128000-5",
+                "description": "Землі промисловості, транспорту, зв'язку, енергетики, оборони та іншого призначення"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "30110000-3",
+                "description": "Текстообробні системи"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "31110000-0",
+                "description": "Електродвигуни"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "32210000-8",
+                "description": "Обладнання для телерадіомовлення"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "33111100-2",
+                "description": "Рентгенівські столи"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "34110000-1",
+                "description": "Легкові автомобілі"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "35111300-8",
+                "description": "Вогнегасники"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "37312400-2",
+                "description": "Саксофони"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "38111100-7",
+                "description": "Компаси"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "39110000-6",
+                "description": "Сидіння, стільці та супутні вироби і частини до них"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "42112300-0",
+                "description": "Газові турбіни"
+           }
+        },
+        {
+            "classification": {
+                "scheme": "CPV",
+                "id": "43124000-8",
+                "description": "Бурильні машини"
+           }
+        }
+    ],
     "units": [
         {
             "code": "PR",
@@ -3156,6 +3277,25 @@
         "39710000-2",
         "16720000-8",
         "98910000-5"
+    ],
+    "schemes_lease": [
+        "04121000-2",
+        "04224000-4",
+        "05110000-9",
+        "05110700-6",
+        "06122000-3",
+        "06128000-5",
+        "30110000-3",
+        "31110000-0",
+        "32210000-8",
+        "33111100-2",
+        "34110000-1",
+        "35111300-8",
+        "37312400-2",
+        "38111100-7",
+        "39110000-6",
+        "42112300-0",
+        "43124000-8"
     ],
     "items_base_data_other": [
            {
@@ -3252,6 +3392,319 @@
             "description_ru": "Тракторы бывшие в употреблении",
             "description_en": "Tractors that were in use",
             "quantity": 22,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+
+
+
+        {
+            "scheme_id": "30000000-9",
+            "description": "Офісна та комп’ютерна техніка, устаткування та приладдя, крім меблів та пакетів програмного забезпечення",
+            "description_ru": "Офисная и компьютерная техника, оборудование и принадлежности, кроме мебели и пакетов программного обеспечения",
+            "description_en": "Office and computer equipment, equipment and supplies, except furniture and software packages",
+            "quantity": 12,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+            {
+            "scheme_id": "31000000-6",
+            "description": "Електротехнічне устаткування, апаратура, обладнання та матеріали; освітлювальне устаткування",
+            "description_ru": "Электротехника, аппаратура, оборудование и материалы; осветительное оборудование",
+            "description_en": "Electrical equipment, equipment, equipment and materials; lighting equipment",
+            "quantity": 10,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+            {
+            "scheme_id": "32000000-3",
+            "description": "Радіо-, телевізійна, комунікаційна, телекомунікаційна та супутня апаратура й обладнання",
+            "description_ru": "Радио, телевизионная, коммуникационная, телекоммуникационная и сопутствующая аппаратура и оборудование",
+            "description_en": "Radio, television, communication, telecommunication and accompanying equipment and equipment",
+            "quantity": 15,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "33000000-0",
+            "description": "Медичне обладнання, фармацевтична продукція та засоби особистої гігієни",
+            "description_ru": "Медицинское оборудование, фармацевтическая продукция и средства личной гигиены",
+            "description_en": "Medical equipment, pharmaceuticals and personal hygiene products",
+            "quantity": 2,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "34000000-7",
+            "description": "Транспортне обладнання та допоміжне приладдя до нього",
+            "description_ru": "Транспортное оборудование и вспомогательные принадлежности к нему",
+            "description_en": "Transport equipment and auxiliary equipment to it",
+            "quantity": 22,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "35000000-4",
+            "description": "Охоронне, протипожежне, поліцейське та оборонне обладнання",
+            "description_ru": "Охранное, противопожарное, полицейское и военное оборудование",
+            "description_en": "Guard, fire fighting, police and defense equipment",
+            "quantity": 22,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "37000000-8",
+            "description": "Музичні інструменти, спортивні товари, ігри, іграшки, ремісничі, художні матеріали та приладдя",
+            "description_ru": "Музыкальные инструменты, спортивные товары, игры, игрушки, ремесленные, художественные материалы и принадлежности",
+            "description_en": "Musical instruments, sports goods, games, toys, handicrafts, art supplies and accessories",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "38000000-5",
+            "description": "Лабораторне, оптичне та високоточне обладнання (крім лінз)",
+            "description_ru": "Лабораторное, оптическое и высокоточное оборудование (кроме линз)",
+            "description_en": "Laboratory, optical and precision equipment (except lenses)",
+            "quantity": 7,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+            {
+            "scheme_id": "39000000-2",
+            "description": "Меблі (у тому числі офісні меблі), меблево-декоративні вироби, побутова техніка (крім освітлювального обладнання) та засоби для чищення",
+            "description_ru": "Мебель (в том числе офисная мебель), мебельно-декоративные изделия, бытовая техника (кроме осветительного оборудования) и средства для чистки",
+            "description_en": "Furniture (including office furniture), furniture and decorative products, household appliances (except lighting equipment) and cleaning agents",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "42000000-6",
+            "description": "Промислова техніка",
+            "description_ru": "Промышленная техника",
+            "description_en": "Industrial engineering",
+            "quantity": 12,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+            {
+            "scheme_id": "43000000-3",
+            "description": "Гірничодобувне та будівельне обладнання",
+            "description_ru": "Горнодобывающее и строительное оборудование",
+            "description_en": "Mining and construction equipment",
+            "quantity": 10,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        }
+    ],
+    "items_base_data_lease": [
+            {
+            "scheme_id": "04121000-2",
+            "description": "Квартира",
+            "description_ru": "Квартира",
+            "description_en": "Apartment",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+            {
+            "scheme_id": "04224000-4",
+            "description": "Об’єкт готельного призначення (готель, кемпінг тощо)",
+            "description_ru": "Объект гостиничного назначения (гостиница, кемпинг и т.д.)",
+            "description_en": "Object of the hotel (hotel, camping, etc.)",
+            "quantity": 7,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+            {
+            "scheme_id": "05110000-9",
+            "description": "Молокозаводи",
+            "description_ru": "Молокозаводы",
+            "description_en": "Dairy plants",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "05110700-6",
+            "description": "Овочесховища",
+            "description_ru": "Овощехранилища",
+            "description_en": "Vegetable storage",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "06122000-3",
+            "description": "Землі природно-заповідного фонду та іншого природоохоронного призначення",
+            "description_ru": "Земли природно-заповедного фонда и другого природоохранного назначения",
+            "description_en": "Lands of natural reserve fund and other nature conservation purposes",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "06128000-5",
+            "description": "Землі промисловості, транспорту, зв'язку, енергетики, оборони та іншого призначення",
+            "description_ru": "Земли промышленности, транспорта, связи, энергетики, обороны и другого назначения",
+            "description_en": "Lands of industry, transport, communications, energy, defense and other purposes",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "30110000-3",
+            "description": "Текстообробні системи",
+            "description_ru": "Текстообробни системы",
+            "description_en": "Text processing systems",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "31110000-0",
+            "description": "Електродвигуни",
+            "description_ru": "Электродвигатели",
+            "description_en": "Electric motors",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "32210000-8",
+            "description": "Обладнання для телерадіомовлення",
+            "description_ru": "Оборудование для телерадиовещания",
+            "description_en": "Equipment for broadcasting",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "33111100-2",
+            "description": "Рентгенівські столи",
+            "description_ru": "Рентгеновские столы",
+            "description_en": "X-ray tables",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "34110000-1",
+            "description": "Легкові автомобілі",
+            "description_ru": "Легковые автомобили",
+            "description_en": "Cars",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "35111300-8",
+            "description": "Вогнегасники",
+            "description_ru": "Огнетушители",
+            "description_en": "Fire extinguishers",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "37312400-2",
+            "description": "Саксофони",
+            "description_ru": "Саксофоны",
+            "description_en": "Saxophones",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "38111100-7",
+            "description": "Компаси",
+            "description_ru": "Компасы",
+            "description_en": "Compasses",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "39110000-6",
+            "description": "Сидіння, стільці та супутні вироби і частини до них",
+            "description_ru": "Сиденья, стулья и сопутствующие изделия и их части",
+            "description_en": "Seats, chairs and related products and parts therefor",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "42112300-0",
+            "description": "Газові турбіни",
+            "description_ru": "Газовые турбины",
+            "description_en": "Gas turbines",
+            "quantity": 5,
+            "unit": {
+                "code": "H87",
+                "name": "штуки"
+            }
+        },
+        {
+            "scheme_id": "43124000-8",
+            "description": "Бурильні машини",
+            "description_ru": "Бурильные машины",
+            "description_en": "Drilling machines",
+            "quantity": 5,
             "unit": {
                 "code": "H87",
                 "name": "штуки"

@@ -289,6 +289,23 @@ def test_item_data(scheme):
     return munchify(data)
 
 
+def test_item_data_lease(scheme):
+    #using typical functions for property lease and all other modes besides dgf financial
+    #items will be genareted from other CAV-PS group
+    data = fake.fake_item_lease(scheme)
+
+    data["description"] = field_with_id("i", data["description"])
+    data["description_en"] = field_with_id("i", data["description_en"])
+    data["description_ru"] = field_with_id("i", data["description_ru"])
+    days = fake.random_int(min=1, max=30)
+    data["contractPeriod"] = {
+                "startDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat(),
+                "endDate": get_now().replace(hour=0, minute=0, second=0, microsecond=0).isoformat()
+    }
+    data["quantity"] = round(random.uniform(1, 10), 3)
+    return munchify(data)
+
+
 def test_tender_data_dgf_other(params):
     data = test_tender_data(params, [])
 
@@ -317,5 +334,69 @@ def test_tender_data_dgf_other(params):
     for i in range(params['number_of_items']):
         scheme_group_other = fake.scheme_other()[:4]
         new_item = test_item_data(scheme_group_other)
+        data['items'].append(new_item)
+    return data
+
+
+def test_tender_data_lease(params):
+    data = test_tender_data(params, [])
+
+    data['lotIdentifier'] = fake.dgfID()
+    data['tenderAttempts'] = fake.random_int(min=1, max=4)
+    data['minNumberOfQualifiedBids'] = int(params['minNumberOfQualifiedBids'])
+
+    data['contractTerms'] = {
+        "type": "lease",
+        "leaseTerms": {
+            "leaseDuration": "P5Y20M",
+            "taxHolidays": [
+                {
+                "taxHolidaysDuration": "P5M",
+                "conditions": create_fake_description('ua'),
+                "conditions_en": create_fake_description('en'),
+                "conditions_ru": create_fake_description('ru'),
+                "value": {
+                    "amount": create_fake_amount(1000, 100000),
+                    "currency": "UAH",
+                    "valueAddedTaxIncluded": "True"
+                    }
+                }
+            ],
+            "escalationClauses": [
+                {
+                "escalationPeriodicity": "P5M",
+                "escalationStepPercentage": create_fake_amount(0, 1),
+                "conditions": create_fake_description('ua'),
+                "conditions_en": create_fake_description('en'),
+                "conditions_ru": create_fake_description('ru')
+                }
+            ]
+        }
+    }
+
+    del data["procuringEntity"]
+
+    for i in range(params['number_of_items']):
+        data['items'].pop()
+
+    url = params['api_host_url']
+    if url == 'https://lb.api.ea.openprocurement.org':
+        del data['procurementMethodDetails']
+
+    del data['rectificationPeriod']
+
+    period_dict = {}
+    inc_dt = get_now()
+    period_dict["auctionPeriod"] = {}
+    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
+    data.update(period_dict)
+
+    data['procurementMethodType'] = 'propertyLease'
+    data["procuringEntity"] = fake.procuringEntity_other()
+
+    for i in range(params['number_of_items']):
+        scheme_group_lease = fake.scheme_lease()[:4]
+        new_item = test_item_data_lease(scheme_group_lease)
         data['items'].append(new_item)
     return data

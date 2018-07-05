@@ -7,10 +7,13 @@
 -i create_tender
 -i find_tender
 -i tender_view
+-i tender_view_dgfID
 -i tender_view_tenderPeriod
 -i tender_view_contractPeriod
+-i tender_view_additionalClassifications_lot
 -i tender_view_unit_code
 -i tender_view_tenderAttempts
+-i tender_view_rectification_end
 
 -i modify_auction_title
 -i modify_auction_description

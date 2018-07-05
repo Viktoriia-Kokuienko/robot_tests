@@ -33,12 +33,14 @@ from .initial_data import (
     test_bid_value,
     test_confirm_data,
     test_item_data,
+    test_item_data_lease,
     test_related_question,
     test_question_answer_data,
     test_question_data,
     test_supplier_data,
     test_tender_data,
     test_tender_data_dgf_other,
+    test_tender_data_lease,
     create_fake_tenderAttempts,
     create_fake_dgfID,
     convert_days_to_seconds,
@@ -333,6 +335,8 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         "Accelerator should not be less than 0"
     if mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
+    elif mode == 'propertyLease':
+        return munchify({'data': test_tender_data_lease(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
 
@@ -495,7 +499,7 @@ def generate_test_bid_data(tender_data):
             bid.data.lotValues.append(value)
     else:
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
-    if 'dgfOtherAssets' in tender_data.get('procurementMethodType', ''):
+    if 'dgfOtherAssets' in tender_data.get('procurementMethodType', '') or 'propertyLease' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
     return bid
 
