@@ -23,6 +23,14 @@ ${NUMBER_OF_AWARDS}  ${1}
   \   ${resp}=  Run As  ${username}  Пошук тендера по ідентифікатору   ${TENDER['TENDER_UAID']}
 
 
+Можливість дочекатись дати початку кваліфікації
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      wait_awarding
+  Дочекатись дати початку періоду кваліфікації  ${viewer}  ${TENDER['TENDER_UAID']}
+
+
 Можливість звірити кількість сформованих авардів лоту
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
   ...      viewer

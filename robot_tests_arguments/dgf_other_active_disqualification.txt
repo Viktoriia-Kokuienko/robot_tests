@@ -21,6 +21,7 @@
 
 -i make_bid_after_tendering_period
 
+-i wait_awarding
 -i number_of_awards
 -i awarding
 -i first_award_verification_status
